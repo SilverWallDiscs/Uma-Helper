@@ -1,6 +1,5 @@
 Here's a `README.md` file for your GitHub repository:
 
-```markdown
 # Umamusume Support Card Options Viewer
 
 This application displays the possible options for Umamusume support cards by detecting the card name on screen using OCR (Optical Character Recognition).
