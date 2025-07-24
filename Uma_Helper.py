@@ -2176,9 +2176,9 @@ class SupportOptionsApp:
         self.ventana.mainloop()
 
     def create_system_tray_icon(self):
-
-        icon_path = Path(__file__).parent / "icon.ico"
-        image = Image.open(icon_path)
+        image = Image.new('RGB', (16, 16), color='black')
+        draw = ImageDraw.Draw(image)
+        draw.text((4, 2), "O", fill="orange")
 
         menu = pystray.Menu(
             pystray.MenuItem("Close", self.cerrar_aplicacion)
@@ -2191,6 +2191,7 @@ class SupportOptionsApp:
             menu
         )
         threading.Thread(target=self.icon.run, daemon=True).start()
+
 
     def cerrar_aplicacion(self):
         self.icon.stop()

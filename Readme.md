@@ -20,9 +20,8 @@ This application displays the possible options for Umamusume support cards by de
 ## Installation
 
 1. Install Tesseract OCR:
-   - **Windows**: Download installer from [UB Mannheim](https://github.com/UB-Mannheim/tesseract/wiki)
-   - **Mac**: `brew install tesseract`
-   - **Linux**: `sudo apt install tesseract-ocr` (Debian/Ubuntu)
+   - **Official Page**: Download installer from [UB Mannheim](https://github.com/UB-Mannheim/tesseract)
+   - **Direct Download**: Version used for program [Download](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.3.0.20221214.exe)
 
 2. Clone this repository:
    ```bash
