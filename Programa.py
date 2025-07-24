@@ -7,12 +7,15 @@ import threading
 import textwrap
 from pynput import mouse
 from win32api import GetSystemMetrics
+import pystray
+from pathlib import Path
+import os
 
 
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-OPCIONES_CARTAS = {
+EVENTOS = {
     "New Year's Shrine Visit": [
         "Energy +30",
         "All stats +5",
@@ -2155,6 +2158,7 @@ class SupportOptionsApp:
         self.ventana.attributes("-topmost", True)
         self.ventana.withdraw()
         self.ventana.config(bg='white')
+        self.evento_terminar = threading.Event()
 
         self.frame = Frame(self.ventana, bg='white')
         self.frame.pack(padx=10, pady=10)
@@ -2163,11 +2167,39 @@ class SupportOptionsApp:
         self.opciones_actuales = []
         self.listener = None
 
+        self.create_system_tray_icon()
+
         self.hilo_deteccion = threading.Thread(target=self.revisar_texto)
         self.hilo_deteccion.daemon = True
         self.hilo_deteccion.start()
 
         self.ventana.mainloop()
+
+    def create_system_tray_icon(self):
+
+        icon_path = Path(__file__).parent / "icon.ico"
+        image = Image.open(icon_path)
+
+        menu = pystray.Menu(
+            pystray.MenuItem("Close", self.cerrar_aplicacion)
+        )
+
+        self.icon = pystray.Icon(
+            "umamusume_support",
+            image,
+            "Uma Event Helper",
+            menu
+        )
+        threading.Thread(target=self.icon.run, daemon=True).start()
+
+    def cerrar_aplicacion(self):
+        self.icon.stop()
+        self.ventana.quit()
+        self.evento_terminar.set()
+        if hasattr(self, 'icon'):
+            self.icon.stop()
+        self.ventana.destroy()
+        os._exit(0)
 
     def crear_rectangulo_redondeado(self, text, width=300, height=60):
         border_width = 1
@@ -2233,7 +2265,7 @@ class SupportOptionsApp:
             self.detener_listener()
 
     def revisar_texto(self):
-        while True:
+        while not self.evento_terminar.is_set():
             captura = ImageGrab.grab(bbox=REGION)
             texto = pytesseract.image_to_string(captura)
 
@@ -2241,7 +2273,7 @@ class SupportOptionsApp:
             for char in caracteres_a_ignorar:
                 texto = texto.replace(char, "")
 
-            for frase, opciones in OPCIONES_CARTAS.items():
+            for frase, opciones in EVENTOS.items():
                 frase_limpia = frase
                 for char in caracteres_a_ignorar:
                     frase_limpia = frase_limpia.replace(char, "")
