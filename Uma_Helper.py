@@ -12,7 +12,9 @@ from pathlib import Path
 import os
 from re import findall, match, sub
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+tesseract_path = os.path.join(os.path.dirname(__file__), "tesseract-ocr", "tesseract.exe")
+pytesseract.pytesseract.tesseract_cmd = tesseract_path
 
 positive_conditions ={
     "Charming": "Raises Friendship Bond gain.",
@@ -29,6 +31,7 @@ negative_conditions ={
     "Slow Metabolism": "Character cannot gain Speed from speed training.",
     "Under the Weather": "Increases chance of training failure.",
     "Practice Poor": "Lowers chance of training failure.",
+    "Chain end": "There will be no more events from this card"
 }
 Positive_skills = {
     # Rare Speed Skills
@@ -283,7 +286,7 @@ EVENTOS = {
     ],
     "Hamburger Helper!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Medicine That Makes You Faster?": [
         "Power 5, Guts 5",
@@ -344,7 +347,7 @@ EVENTOS = {
     ],
     "A Taste of Effort": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "A Little Encounter": [
         "Wisdom 10",
@@ -393,7 +396,7 @@ EVENTOS = {
     ],
     "Banana Fiend": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Reading in a Cafe": [
         "Stamina 10",
@@ -442,7 +445,7 @@ EVENTOS = {
     ],
     "Can't Lose Sight of Number One!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "As a Model Student": [
         "Wisdom 10",
@@ -491,7 +494,7 @@ EVENTOS = {
     ],
     "Hot and Spicy!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "The Wrestler I Admire": [
         "Stamina 10",
@@ -551,7 +554,7 @@ EVENTOS = {
     ],
     "Killer Appetite!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Legend of the Left Pinky": [
         "Stamina 10",
@@ -608,7 +611,7 @@ EVENTOS = {
     ],
     "Together for Tea": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Yamato Nadeshiko": [
         "Power 5, Wisdom 5",
@@ -657,7 +660,7 @@ EVENTOS = {
     ],
     "The Final Boss Spe!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "A Little Detour!": [
         "Skill points 30",
@@ -714,7 +717,7 @@ EVENTOS = {
     ],
     "Sweet Tooth Temptation": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "First Rate Spot": [
         "Guts 10",
@@ -775,7 +778,7 @@ EVENTOS = {
     ],
     "Nostalgia Fever": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "The Secret to Supporting Each Other": [
         "Speed 10",
@@ -827,7 +830,7 @@ EVENTOS = {
     ],
     "Seven Gods of Fortune Fine Food Tour": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Fukukitaru's Protection against Misfortune": [
         "Guts 10",
@@ -876,7 +879,7 @@ EVENTOS = {
     ],
     "Hearty Chanko": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Maya's Exciting Livestream!": [
         "Stamina 5, Power 5",
@@ -924,12 +927,12 @@ EVENTOS = {
         "Early Lead 1"
     ],
     "The Allure of Racecourse Food": [
-        "Energy 30, Skill points 10",
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|",
         "Guts 15, Skill points 5"
     ],
     "Attack of the Chestnut Feast!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Two Tickets for the Silver Screen": [
         "Stamina 10",
@@ -978,7 +981,7 @@ EVENTOS = {
     ],
     "Rest Day": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Nerve Racking Rest Time": [
         "Stamina 10",
@@ -1031,7 +1034,7 @@ EVENTOS = {
     ],
     "The Perfect Dessert": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Let's Make Memories": [
         "Speed 10",
@@ -1080,7 +1083,7 @@ EVENTOS = {
     ],
     "A Little Can't Hurt": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "A Phone Call from Mom": [
         "Stamina 10",
@@ -1128,12 +1131,12 @@ EVENTOS = {
         "Nakayama Racecourse 1"
     ],
     "Oguri's Gluttony Championship": [
-        "Energy 30, Power 10, Skill points 10",
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|",
         "Energy 10, Power 5, Skill points 5"
     ],
     "Bottomless Pit": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Oguri Makes a Resolution": [
         "Speed 5, Wisdom 5",
@@ -1182,7 +1185,7 @@ EVENTOS = {
     ],
     "A Page about Apples": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Even When the Ladybugs Are Gone": [
         "Stamina 10",
@@ -1231,7 +1234,7 @@ EVENTOS = {
     ],
     "Bakushin?! Class?!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Bakushining with a Classmate!": [
         "Power 5, Guts 5",
@@ -1280,7 +1283,7 @@ EVENTOS = {
     ],
     "White Temptation": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "My Little Snowscape": [
         "Stamina 10",
@@ -1329,7 +1332,7 @@ EVENTOS = {
     ],
     "Putting It Away at the Cafeteria": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Because It's Special": [
         "Stamina 10",
@@ -1373,12 +1376,12 @@ EVENTOS = {
         "Corner Recovery 1"
     ],
     "Sweet Nighttime Temptation": [
-        "Energy 30, Speed 10, Skill points 10",
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|",
         "Energy 10, Speed 5, Skill points 5"
     ],
     "For My Friends": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Is Relaxing Being Spoiled?": [
         "Stamina 10",
@@ -1439,7 +1442,7 @@ EVENTOS = {
     ],
     "The Emperor's Satiation": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Birds of a Feather": [
         "Speed 10",
@@ -1496,7 +1499,7 @@ EVENTOS = {
     ],
     "Meaty Heaven": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Rainy Power": [
         "Power 10",
@@ -1545,7 +1548,7 @@ EVENTOS = {
     ],
     "Battle of Kings - The Great Ramen War": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "The Princess in Pajamas": [
         "Speed 10",
@@ -1602,7 +1605,7 @@ EVENTOS = {
     ],
     "Secret to Strength": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(80/20) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "I Got Praised!": [
         "Stamina 10",
@@ -1651,7 +1654,7 @@ EVENTOS = {
     ],
     "Awkward Honesty": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "The Standards of Coolness": [
         "Wisdom 10",
@@ -1700,7 +1703,7 @@ EVENTOS = {
     ],
     "Full Power Eating!": [
         "Energy 10, Skill points 5",
-        "Energy 30, Skill points 10"
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
     ],
     "Play of the Three Kingdoms": [
         "Stamina 5, Skill points 15",
@@ -1736,15 +1739,15 @@ EVENTOS = {
         "Energy 30, Stamina 20, Breath of Fresh Air 1"
     ],
     "Get Well Soon!": [
-        "Mood -1, Last trained stat -5, Chance to get Practice Poor -1",
-        "(85/15) |Mood -1, Last trained stat -10, Chance to get Practice Poor -1| OR |Practice Perfect 1|"
+        "(90/10) |Mood -1, Last trained stat -5| OR |Mood -1, Last trained stat -5, Practice Poor -1|",
+        "(85/15) |Mood -1, Last trained stat -10, (50% Chance) to get Practice Poor -1| OR |Practice Perfect 1|"
     ],
     "Don't Overdo It!": [
-        "Energy 10, Mood -2, Last trained stat -10, 2 Random stats -10, Chance to get Practice Poor -1",
+        "(50/50) |Energy 10, Mood -2, Last trained stat -10, 2 Random stats -10| OR |Energy 10, Mood -2, Last trained stat -10, 2 Random stats -10, Practice Poor -1|",
         "(95/5) |Mood -3, Last trained stat -10, 2 Random stats -10, Practice Poor -1| OR |Energy 10, Practice Perfect 1|"
     ],
     "Extra Training": [
-        "Energy -5, Last trained stat 5,  |(random) Heal a negative status effect|",
+        "(80/20) |Energy -5, Last trained stat 5| OR |Energy -5, Last trained stat 5, Heal a negative status effect|",
         "Energy 5"
     ],
     "At Summer Camp Year 2": [
@@ -1816,12 +1819,12 @@ EVENTOS = {
         "Trick (Rear) 1"
     ],
     "I'm Not Afraid!": [
-        "(0/0) |Speed 10| OR |Energy -10, Speed 10|",
-        "Energy 20"
+        "(0/0) |Speed 10| OR |Energy -10, Speed 10, Chain end|",
+        "Energy 20, Chain end"
     ],
     "Can't Catch Me!": [
-        "(0/0) |Speed 15, Leader's Pride 3| OR |Energy -10, Speed 10|",
-        "Energy 25"
+        "(0/0) |Speed 15, Leader's Pride 3| OR |Energy -10, Speed 10, Chain end|",
+        "Energy 25, Chain end"
     ],
     "Turbo Is Strong!": [
         "(0/0) |Energy -10, Speed 25, Taking the Lead 3| OR |Energy -10, Speed 5, Early Lead 1|",
@@ -1969,7 +1972,7 @@ EVENTOS = {
     ],
     "Umame": [
         "Energy 30",
-        "Stamina to Spare 1"
+        "Stamina to Spare 1, chain end"
     ],
     "Blazing Fire!": [
         "Stamina 10",
@@ -1981,7 +1984,7 @@ EVENTOS = {
     ],
     "Uma-me": [
         "Energy 30",
-        "Stamina to Spare 1"
+        "Stamina to Spare 1, chain end"
     ],
     "Etude to Victory": [
         "Mood -1, Speed 5, Skill points 30",
@@ -2069,7 +2072,7 @@ EVENTOS = {
     ],
     "Enthusiastic Pair": [
         "Energy 14, Wisdom 6, Mood 1, Can start dating",
-        "Mood -1, bond -5, Watchful Eye 1, Chain ended"
+        "Mood -1, bond -5, Watchful Eye 1, Chain end"
     ],
     "How I Play at the Park": [
         "Energy 35, Wisdom 6",
@@ -2081,7 +2084,7 @@ EVENTOS = {
     ],
     "The Search for a Hobby": [
         "Energy 20, Skill Points 15, Mood 1, Can start dating",
-        "Mood -1, Maverick 1, bond -5, Chain ended"
+        "Mood -1, Maverick 1, bond -5, Chain end"
     ],
     "I'm Going to Win Tomorrow!": [
         "Wisdom 10",
@@ -2162,7 +2165,7 @@ EVENTOS = {
     ],
     "I'm Not a Cyborg": [
         "Guts 10, Skill Points 15",
-        "Energy -10, Corner Recovery 1, bond -5, Chain ended"
+        "Energy -10, Corner Recovery 1, bond -5, Chain end"
     ],
     "Do No Harm": [
         "Energy -10, Stamina 5, Power 15",
@@ -2230,7 +2233,7 @@ EVENTOS = {
     ],
     "Always on Stage": [
         "Wisdom 10",
-        "Energy 25, Focus 1, Chain ended"
+        "Energy 25, Focus 1, Chain end"
     ],
     "Chants Are the Life of a Concert": [
         "Stamina 5, Guts 10",
@@ -2376,6 +2379,95 @@ EVENTOS = {
         "Mood 1, Power 5",
         "Energy 10"
     ],
+    "The Class Rep's Intense Crash Course": [
+        "Mood 1, Power 5",
+        "Power 3, Guts 3, Wisdom 3"
+    ],
+    "I Wanna Win!": [
+        "Mood 1, No Stopping Me! 1",
+        "Power 3, Guts 3, Wisdom 3, No Stopping Me! 1"
+    ],
+    "Aiming for the City Spots": [
+        "Energy -10, Mood 1, Guts 10",
+        "Corner Acceleration 1"
+    ],
+    "For a Spiffy Concert": [
+        "Guts 10",
+        "Energy -10, Guts 15"
+    ],
+    "Which Curren Do You Like?": [
+        "Speed 10, Power 10",
+        "Stamina 10, Guts 10"
+    ],
+    "How Curren Handles Social Media": [
+        "Speed 20",
+        "Wisdom 20"
+    ],
+    "Curren's Signature Racewear": [
+        "Speed 10, Stamina 10, (random) Get Practice Perfect 1",
+        "Speed 10, Power 10, (random) Get Practice Perfect 1"
+    ],
+    "One Two Three Curren Chan!": [
+        "Speed 10",
+        "Wisdom 10"
+    ],
+    "Ms Worldwide": [
+        "Power 10",
+        "Speed 10"
+    ],
+    "Wanna Eat Together?": [
+        "Energy 10, Skill points 5",
+        "(90/10) |Energy 30, Skill points 10| OR |Energy 30, Skill points 10, Speed -5, Power 5, Slow Metabolism -1|"
+    ],
+    "Thanks for the Lesson": [
+        "Energy -10, Speed 20",
+        "Frenzied Late Surgers"
+    ],
+    "Making Friends": [
+        "Power 10",
+        "Wisdom 10"
+    ],
+    "Making Connections": [
+        "Guts 10",
+        "Power 10"
+    ],
+    "Universal Cutie": [
+        "Speed 5, Power 5",
+        "Speed 10",
+        "Speed 5, Wisdom 5"
+    ],
+    "A Nostalgic Flavor": [
+        "Stamina 10",
+        "Power 10"
+    ],
+    "Rattle Rattle Clunk": [
+        "Wisdom 10",
+        "Stamina 10"
+    ],
+    "My Roommate's Concern": [
+        "Calm in a Crowd 2",
+        "Stamina 10, Skill points 15"
+    ],
+    "My Family Make a Difficult Decision": [
+        "Speed 10, Power 10",
+        "Stamina 7, Guts 7, Wisdom 7"
+    ],
+    "My Rival No Matter the Stage": [
+        "(0/0) |Prudent Positioning 2| OR |Prudent Positioning 2, Hot Topic 1|",
+        "(0/0) |Wisdom 10, Skill points 15| OR |Wisdom 10, Skill points 15, Hot Topic 1|"
+    ],
+    "Rivals on Paper Friends in Practice": [
+        "Stamina to Spare 2",
+        "Speed 10, Skill points 15"
+    ],
+    "I'm Never Giving Up!": [
+        "(0/0) |Stamina 15, Guts 5| OR |Stamina 15, Guts 5, Practice Perfect 1|",
+        "(0/0) |Power 5, Wisdom 15| OR |Stamina 15, Guts 5, Practice Perfect 1|"
+    ],
+    "The Secret to Teio Tenacity": [
+        "Corner Acceleration 2",
+        "Wisdom 10, Skill points 15"
+    ],
     "Copythisformore": [
         "",
         ""
@@ -2404,6 +2496,7 @@ colored_terms = {
     "OR": "#22009E",
     "Skill": "#0066CC",
     "Skill points": "#0066CC",
+    "Chain end": "#FF0000",
     
     # ===== POSITIVE SKILLS (Orange) =====
     # Rare Speed Skills
@@ -2719,7 +2812,7 @@ class SupportOptionsApp:
     def crear_rectangulo_probabilidades(self, text, width, height, outline_color):
         probability_match = match(r'\((\d+)/(\d+)\)', text)
         prob1, prob2 = probability_match.groups()
-        
+
         clean_text = sub(r'\((\d+)/(\d+)\)\s*', '', text).replace('|', '').strip()
         parts = [p.strip() for p in clean_text.split("OR") if p.strip()]
         
