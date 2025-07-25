@@ -12,7 +12,6 @@ from pathlib import Path
 import os
 
 
-
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 EVENTOS = {
@@ -2176,12 +2175,17 @@ class SupportOptionsApp:
         self.ventana.mainloop()
 
     def create_system_tray_icon(self):
-        image = Image.new('RGB', (16, 16), color='black')
-        draw = ImageDraw.Draw(image)
-        draw.text((4, 2), "O", fill="orange")
+        icon_path = os.path.join(os.path.dirname(__file__), "assets", "icon.ico")
+        try:
+            image = Image.open(icon_path).resize((16, 16))
+        except Exception as e:
+            print(f"No se pudo cargar el icono: {e}. Usando icono por defecto")
+            image = Image.new('RGB', (16, 16), color='black')
+            draw = ImageDraw.Draw(image)
+            draw.text((4, 2), "O", fill="orange")
 
         menu = pystray.Menu(
-            pystray.MenuItem("Close", self.cerrar_aplicacion)
+            pystray.MenuItem("Cerrar", self.cerrar_aplicacion)
         )
 
         self.icon = pystray.Icon(
@@ -2201,6 +2205,8 @@ class SupportOptionsApp:
             self.icon.stop()
         self.ventana.destroy()
         os._exit(0)
+
+    
 
     def crear_rectangulo_redondeado(self, text, width=300, height=60):
         border_width = 1
